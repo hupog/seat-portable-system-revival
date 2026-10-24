@@ -1,0 +1,40 @@
+--- a/autorunce.mscr
++++ b/autorunce.mscr
+@@ -3,20 +3,30 @@
+ 
+ Call CheckForMarkerFiles
+ 
+-RunWait("\My Flash Disk\BT\ReadWriteBTAddress.exe")
++# Optional: battery logger (see scripts/diagnostics/diagbat.mscr)
++Run("\My Flash Disk\diagbat.exe")
++
++Call AddFontSkipping
++Call InstallDebugger
++Call CleanupInstallation
+ 
++# --- Soft boot: Bluetooth first, then car communication + main menu ---
++RunWait("\My Flash Disk\BT\ReadWriteBTAddress.exe")
++Run("\My Flash Disk\WatchdogPuppy.exe", "Watchdog_BTCore.ini")
+ Run("\My Flash Disk\WatchdogPuppy.exe", "Watchdog_VWCom.ini")
+ SetFileAttribute("\My Flash Disk\BrandDevice.reg", "readonly", FALSE)
+ RunWait("\My Flash Disk\VwBrandDevice\VwBrandDevice.exe")
+ Run("\My Flash Disk\NAVIGON\VolumeUI.exe")
+-Run("\My Flash Disk\WatchdogPuppy.exe", "Watchdog_MN.ini Watchdog_BTCore.ini Watchdog_VwUserShell.ini Watchdog_PhoneApplication.ini Watchdog_MMP.ini Watchdog_HW.ini")
++Run("\My Flash Disk\WatchdogPuppy.exe", "Watchdog_VwUserShell.ini Watchdog_HW.ini")
+ 
+-Sleep(5000)
+-Run("\My Flash Disk\NAVIGON\CheckForStorageCard2.exe")
++# --- Everything else one at a time, so power peaks do not add up ---
++Sleep(3000)
++Run("\My Flash Disk\WatchdogPuppy.exe", "Watchdog_PhoneApplication.ini")
++Sleep(40000)
++Run("\My Flash Disk\WatchdogPuppy.exe", "Watchdog_MMP.ini")
+ 
+-Call AddFontSkipping
+-Call InstallDebugger
+-Call CleanupInstallation
++# --- Original navigator disabled at boot (navigon.exe is never started here).
++# --- The menu's Navigation button launches Navit instead (see NgAppCom.xml).
+ 
+ Exit
+ 

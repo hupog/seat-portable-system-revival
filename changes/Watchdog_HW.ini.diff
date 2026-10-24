@@ -1,0 +1,21 @@
+--- a/Watchdog_HW.ini
++++ b/Watchdog_HW.ini
+@@ -52,17 +52,5 @@
+ Timeout = 100000
+ 
+ [NamedEvent1]
+-Name = MNRefreshEvent
+-Timeout = 100000
+-
+-[NamedEvent2]
+ Name = UserShellRefreshEvent
+-Timeout = 40000
+-
+-[NamedEvent3]
+-Name = PhoneApplicationRefreshEvent
+-Timeout = 40000
+-
+-[NamedEvent4]
+-Name = MMPRefreshEvent
+-Timeout = 40000
++Timeout = 60000

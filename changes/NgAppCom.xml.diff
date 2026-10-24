@@ -1,0 +1,11 @@
+--- a/NgAppCom.xml
++++ b/NgAppCom.xml
+@@ -2,7 +2,7 @@
+ <AppCom>
+   <SyncTimeOut>4000</SyncTimeOut>
+   <Application Name="MobileNavigator">
+-    <Exe>.\..\NAVIGON\navigon.exe</Exe>
++    <Exe>.\..\abrenav.exe</Exe>
+     <Disclaimer>.\..\NAVIGON\Settings\Disclaimer.txt</Disclaimer>
+     <Version>.\..\NAVIGON\version.xml</Version>
+     <WindowName>Mobile Navigator</WindowName>

@@ -1,0 +1,10 @@
+--- a/UserSettingsLanguage.default
++++ b/UserSettingsLanguage.default
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="ISO-8859-1" ?>
+ <Settings>
+     <Product>MN</Product>
+-    <Version>7.0</Version>    
++    <Version>7.0</Version>
++    <Language>spa-ESP</Language>
+ </Settings>

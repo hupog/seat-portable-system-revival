@@ -1,0 +1,12 @@
+# abrenav.mscr - target of the SEAT menu's "Navigation" button (MortScript 4.1).
+# NgAppCom.xml points the "MobileNavigator" application to abrenav.exe
+# (a renamed copy of the autorunce.exe launcher stub), which runs this script.
+# Navit is only loaded when the button is pressed; pressing it again just
+# brings the running instance to the front instead of starting a second one.
+ErrorLevel("off")
+If ( WndExists("Navit") )
+	Show("Navit")
+Else
+	Run("\My Flash Disk\Navit\navit.exe")
+EndIf
+Exit

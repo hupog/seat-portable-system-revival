@@ -1,0 +1,17 @@
+# diagbat.mscr - battery logger (MortScript 4.1).
+# Every 10 s for up to 2 hours: time; main battery %; external power (1/0);
+# backup battery %. Each line is written immediately, so the last samples
+# before a reboot survive. (During the investigation it ran every 2 s.)
+# Note: the first sample of each boot reads 100 % before the driver measures.
+ErrorLevel("critical")
+base = "\My Flash Disk\_diag\"
+MkDir(base)
+out = base & "battery_" & FormatTime("YmdHis") & ".txt"
+WriteFile(out, "BATTERY start " & FormatTime("Y-m-d H:i:s") & "^NL^time;battery%;external_power;backup_battery%^NL^", TRUE)
+n = 0
+While ( n < 720 )
+	WriteFile(out, FormatTime("H:i:s") & ";" & BatteryPercentage() & ";" & ExternalPowered() & ";" & BackupBatteryPercentage() & "^NL^", TRUE)
+	Sleep(10000)
+	n = n + 1
+EndWhile
+WriteFile(out, "BATTERY end^NL^", TRUE)

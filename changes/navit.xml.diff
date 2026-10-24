@@ -1,0 +1,68 @@
+--- a/navit.xml
++++ b/navit.xml
+@@ -33,7 +33,7 @@
+ 	Center coordinates format: "Long Lat" in decimal degrees (WGS 84).
+ 	For other formats see https://navit.readthedocs.io/en/latest/user/configuration/Coordinate%20format.html.
+ 	-->
+-	<navit center="11.5666 48.1333" zoom="256" tracking="1" orientation="-1" recent_dest="250" drag_bitmap="0" default_layout="Car">
++	<navit center="-8.7207 42.2406" zoom="32" tracking="1" orientation="-1" recent_dest="250" drag_bitmap="0" default_layout="Car">
+ 		<!-- Use one of gtk_drawing_area, qt_qpainter or sdl. On windows systems, use win32 -->
+ 		<graphics type="win32"/>
+ 
+@@ -67,7 +67,7 @@
+ 		The action that appears on map click is configurable with the attribute "on_map_click".
+ 		To get the previous behaviour of showing the map point menu use on_map_click='menu("#Map Point")'
+ 		-->
+-		<gui type="internal" enabled="yes"><![CDATA[
++		<gui type="internal" enabled="yes" font_size="300" icon_xs="32" icon_s="48" icon_l="64"><![CDATA[
+ 			<html>
+ 				<a name='Main Menu'><text>Main menu</text>
+ 					<a href='#Actions'><img src='gui_actions'>Actions</img></a>
+@@ -197,12 +197,12 @@
+         <osd type="text" label="${navigation.item[1].length[unit]}" x="0" y="94" w="60" h="20" font_size="200" enable_expression="navigation.nav_status&gt;=3"/>
+         <osd type="text" label="${tracking.item.street_name} ${tracking.item.street_name_systematic}" x="0" y="-14" w="100%" h="14" font_size="200" enable_expression="vehicle.position_valid"/>
+         <osd type="toggle_announcer" icon_src="%s" x="-32" y="-126" w="24" h="24"/>
+-        <osd type="button" src="zoom_manual" command="autozoom_active=0" x="8" y="-46" w="24" h="24" osd_configuration="1" use_overlay="true" enable_expression="autozoom_active!=0"/>
+-        <osd type="button" src="zoom_auto" command="autozoom_active=1" x="8" y="-46" w="24" h="24" osd_configuration="1" use_overlay="true" enable_expression="autozoom_active==0"/>
+-        <osd type="button" src="zoom_in" command="zoom_in()" x="40" y="-46" w="24" h="24" osd_configuration="1" use_overlay="true"/>
+-        <osd type="button" src="zoom_out" command="zoom_out()" x="72" y="-46" w="24" h="24" osd_configuration="1" use_overlay="true"/>
+-        <osd type="button" src="follow" command="follow=0;set_center_cursor()" x="8" y="-78" w="24" h="24" enable_expression="follow&gt;1" use_overlay="true"/>
+-        <osd type="cmd_interface" update_period="1" command="pitch=autozoom_active==0?pitch:(follow&gt;1?0:20);orientation=autozoom_active==0?orientation:(follow&gt;1?0:-1)" x="-1" y="-1" w="1" h="1"/>
++        <osd type="button" src="zoom_manual" command="autozoom_active=0" x="8" y="-56" w="48" h="48" osd_configuration="1" use_overlay="true" enable_expression="autozoom_active!=0"/>
++        <osd type="button" src="zoom_auto" command="autozoom_active=1" x="8" y="-56" w="48" h="48" osd_configuration="1" use_overlay="true" enable_expression="autozoom_active==0"/>
++        <osd type="button" src="zoom_in" command="zoom_in()" x="64" y="-56" w="48" h="48" osd_configuration="1" use_overlay="true"/>
++        <osd type="button" src="zoom_out" command="zoom_out()" x="120" y="-56" w="48" h="48" osd_configuration="1" use_overlay="true"/>
++        <osd type="button" src="follow" command="follow=0;set_center_cursor()" x="8" y="-112" w="48" h="48" enable_expression="follow&gt;1" use_overlay="true"/>
++        <osd type="cmd_interface" update_period="1" command="pitch=0;orientation=autozoom_active==0?orientation:(follow&gt;1?0:-1)" x="-1" y="-1" w="1" h="1"/>
+         <osd enabled="no" type="compass"/>
+ 		<osd enabled="no" type="navigation_next_turn"/>
+ 
+@@ -218,7 +218,7 @@
+ 		<traffic type="null"/>
+ 
+ 		<!-- Vehicle with GPS enabled for gpsd on unix -->
+-		<vehicle name="Local GPS" profilename="car" enabled="yes" active="1" source="wince:COM2:" baudrate="4800">
++		<vehicle name="Local GPS" profilename="car" enabled="yes" active="1" source="wince:COM7:" baudrate="38400">
+ 		<!-- Vehicle with GPS enabled for direct communication on windows. Remove the line above if you use this. -->
+ 		<!-- <vehicle name="Local GPS" profilename="car" follow="1" enabled="yes" active="1"
+ 				source="serial:COM4 baudrate=4800 parity=N data=8 stop=1" > -->
+@@ -440,7 +440,7 @@
+ 
+ 		<!-- If you dont want to use the sample map, either set enabled="no" in the next line or remove the xml file from the maps directory -->
+ 		<mapset enabled="yes">
+-			<map type="binfile" data="$NAVIT_SHAREDIR/maps/osm_bbox_11.3,47.9,11.7,48.2.bin"/>
++			<map type="binfile" data="\My Flash Disk\Navit\maps\vigo_area.bin"/>
+ 		</mapset>
+ 
+ 		<!-- Mapset template for OpenStreetMap -->
+@@ -466,8 +466,8 @@
+ 		If two layouts with the same name are included, the first one takes precedence.
+ 		In the list below, we use the user-defined layouts first (in $NAVIT_USER_DATADIR), they take precedence. Being next in the list, the default layouts (in $NAVIT_SHAREDIR) will only be used if there is no user-defined layout that was already defined with the same name.
+ 		-->
+-		<xi:include href="$NAVIT_USER_DATADIR/navit_layout_*.xml"/>
+-		<xi:include href="$NAVIT_SHAREDIR/navit_layout_*.xml"/>
++				<xi:include href="navit_layout_car.xml"/>
++		<xi:include href="navit_layout_car_dark.xml"/>
+ 		<layout name="Route">
+ 			<layer name="streets">
+ 				<itemgra item_types="street_route_occluded" order="0-">

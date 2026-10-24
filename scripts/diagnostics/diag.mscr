@@ -1,0 +1,59 @@
+# diag.mscr - one-shot system snapshot taken at every boot (MortScript 4.1).
+# Launched from autorunce.mscr through diag.exe (a renamed copy of the
+# autorunce.exe launcher stub, which runs the .mscr file with the same name).
+# Output: \My Flash Disk\_diag\<timestamp>\ (visible over USB as the device drive)
+ErrorLevel("critical")
+base = "\My Flash Disk\_diag\"
+MkDir(base)
+dest = base & FormatTime("YmdHis") & "\"
+MkDir(dest)
+out = dest & "diag.txt"
+
+WriteFile(out, "DIAG start " & FormatTime("Y-m-d H:i:s") & "^NL^", TRUE)
+
+# Windows CE event logs (not reachable over USB)
+MkDir(dest & "WindowsLogs\")
+XCopy("\Windows\*Log.xml", dest & "WindowsLogs\", TRUE, FALSE)
+
+WriteFile(out, "^NL^== Root folders ==^NL^", TRUE)
+ForEach d in directories("\*")
+	WriteFile(out, "[D] " & d & "^NL^", TRUE)
+EndForEach
+
+WriteFile(out, "^NL^== Root files ==^NL^", TRUE)
+ForEach f in files("\*.*")
+	WriteFile(out, f & "^NL^", TRUE)
+EndForEach
+
+# Hidden settings partition used by the navigator, phone and menu apps
+WriteFile(out, "^NL^== Files in \MN Settings ==^NL^", TRUE)
+ForEach f in files("\MN Settings\*.*")
+	WriteFile(out, f & "^NL^", TRUE)
+EndForEach
+
+WriteFile(out, "^NL^== Files in \Windows ==^NL^", TRUE)
+ForEach f in files("\Windows\*.*")
+	WriteFile(out, f & "^NL^", TRUE)
+EndForEach
+
+If ( DirExists("\Documents and Settings") )
+	WriteFile(out, "^NL^== Files in \Documents and Settings ==^NL^", TRUE)
+	ForEach f in files("\Documents and Settings\*.*")
+		WriteFile(out, f & "^NL^", TRUE)
+	EndForEach
+	MkDir(dest & "DocSettings\")
+	XCopy("\Documents and Settings\*.*", dest & "DocSettings\", TRUE, TRUE)
+EndIf
+
+# Two snapshots of the settings partition: at boot and 60 s later,
+# to see what the apps write before a crash
+MkDir(dest & "MNSettings_0s\")
+XCopy("\MN Settings\*.*", dest & "MNSettings_0s\", TRUE, TRUE)
+WriteFile(out, "^NL^MN Settings copy at boot done " & FormatTime("H:i:s") & "^NL^", TRUE)
+
+Sleep(60000)
+MkDir(dest & "MNSettings_60s\")
+XCopy("\MN Settings\*.*", dest & "MNSettings_60s\", TRUE, TRUE)
+WriteFile(out, "MN Settings copy at 60 s done " & FormatTime("H:i:s") & "^NL^", TRUE)
+
+WriteFile(out, "DIAG end " & FormatTime("Y-m-d H:i:s") & "^NL^", TRUE)

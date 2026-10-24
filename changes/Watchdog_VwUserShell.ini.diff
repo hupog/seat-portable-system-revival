@@ -1,0 +1,17 @@
+--- a/Watchdog_VwUserShell.ini
++++ b/Watchdog_VwUserShell.ini
+@@ -1,10 +1,12 @@
+ [General]
+ ShowMessageBox = false
+-ActionAtTimeout = 1
+-ActionAtTermination = 1
++ActionAtTimeout = 2
++ActionAtTermination = 2
+ RefreshEventName = UserShellRefreshEvent
+ 
+ [Executable]
++WaitTimeUntilRestart=10000
++MaximumRestartCounter=10
+ Name = USh
+ PathtoExe=\My Flash Disk\VWUserShell\VwUserShell.exe
+ Arguments=-ShowWindow=1

@@ -1,0 +1,7 @@
+# nonav.mscr - "do nothing" target for the Navigation button (MortScript 4.1).
+# Used while navigation was fully disabled: instead of starting the crashing
+# navigon.exe, it just brings the SEAT menu back to the front.
+# To use it, point NgAppCom.xml to .\..\nonav.exe instead of .\..\abrenav.exe.
+ErrorLevel("off")
+Show("VwUserShell")
+Exit

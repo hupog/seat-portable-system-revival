@@ -1,0 +1,10 @@
+--- a/ErrorReporter.ini
++++ b/ErrorReporter.ini
+@@ -7,6 +7,6 @@
+ UseTimestamps=1
+ StackTracePath=\My Flash Disk\NAVIGON\ErrorReporter
+ MaxNumberOfStacktraceFiles=100
+-ResetAfterException=1
++ResetAfterException=0
+ ResetTimeoutSeconds=0
+ DumpAllThreads=1

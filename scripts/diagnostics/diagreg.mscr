@@ -1,0 +1,19 @@
+# diagreg.mscr - dumps a few registry keys (MortScript 4.1).
+# Kept in its own script so an unsupported function cannot break the others.
+ErrorLevel("critical")
+base = "\My Flash Disk\_diag\"
+MkDir(base)
+out = base & "registry_" & FormatTime("YmdHis") & ".txt"
+WriteFile(out, "REGISTRY start " & FormatTime("Y-m-d H:i:s") & "^NL^", TRUE)
+
+WriteFile(out, "^NL^== Subkeys of HKLM\Software ==^NL^", TRUE)
+ForEach k in regSubkeys("HKLM", "Software")
+	WriteFile(out, k & "^NL^", TRUE)
+EndForEach
+
+WriteFile(out, "^NL^== HKLM\Debug ==^NL^", TRUE)
+ForEach v, x in regValues("HKLM", "Debug")
+	WriteFile(out, v & " = " & x & "^NL^", TRUE)
+EndForEach
+
+WriteFile(out, "REGISTRY end^NL^", TRUE)
